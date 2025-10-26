@@ -1,7 +1,10 @@
 (function onAccess(){
-    const logged = localStorage.getItem("session");
-    JSON.parse(logged)
-    if( !logged ) return
+    let logged = localStorage.getItem("session");
+    let loggedSession = sessionStorage.getItem("session");
+    logged = JSON.parse(logged)
+    loggedSession = JSON.parse(loggedSession)
+
+    if( !logged && !loggedSession ) return
 
     sessionStorage.setItem("session", JSON.stringify(logged));
     window.location.href = "home.html";
@@ -26,6 +29,7 @@ document.getElementById("login-form").addEventListener("submit",(e)=>{
     }
 
     saveSession({email, password, transactions: []}, session);
+
     alert("Logado com sucesso !")
     window.location.href = "home.html";
 })
@@ -62,5 +66,6 @@ function saveSession(data, session){
         sessionStorage.setItem("session", JSON.stringify(data));
         return
     }
+    sessionStorage.setItem("session", JSON.stringify(data));
     localStorage.setItem("session", JSON.stringify(data));
 }
